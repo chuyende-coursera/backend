@@ -1,0 +1,1 @@
+export { sequelize, Op } from './sequelize'
