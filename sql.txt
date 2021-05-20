@@ -1,0 +1,88 @@
+CREATE TABLE `users` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(50) NOT NULL,
+  `passwork` VARCHAR(100) NOT NULL,
+  `fullname` NVARCHAR(100) NULL,
+  `email` VARCHAR(100) NULL,
+  `mobile` VARCHAR(12) NULL,
+  `group_user_id` INT(11) NULL,
+  `address` NVARCHAR(300) NULL,
+  `wards_id` VARCHAR(45) NOT NULL,
+  `status` VARCHAR(45) NOT NULL,
+  `create_date` DATE NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC),
+  UNIQUE INDEX `mobile_UNIQUE` (`mobile` ASC));
+)
+
+CREATE TABLE `groupUsers` (
+  `id` INT NOT NULL AUTO_INCREMENT primary key,
+  `name` VARCHAR(50) NOT NULL,
+  `createDate` datetime default current_timestamp,
+  `status` bit not null default 1
+)
+
+create table categories (
+	id bigint not null primary key auto_increment,
+    name nvarchar(100) not null,
+    topics_id bigint not null
+);
+
+create table courses (
+	id bigint not null primary key auto_increment,
+    title nvarchar(100) not null,
+	level integer not null default 0,
+    languages_id bigint not null,
+    categories_id bigint not null,
+    jobs_id bigint not null,
+    skills_id bigint not null,
+    creators_id bigint not null,
+    duration integer not null default 1 -- week
+);
+
+create table courses_weeks (
+    courses_id bigint not null,
+    weeks_id bigint not null,
+    CONSTRAINT courses_weeks_pk PRIMARY KEY (courses_id, weeks_id)
+);
+
+
+create table weeks (
+	id bigint not null primary key auto_increment,
+    time_complete bigint not null, -- // minute
+	header nvarchar(100) not null,
+    description nvarchar(100) not null
+);
+
+create table video_week (
+	id bigint not null primary key auto_increment,
+    video_url varchar(500) not null,
+    order_video integer(11) not null,
+    video_header nvarchar(100) not null,
+    duration_video integer(11) not null,
+    weeks_id bigint not null
+)
+
+
+create table skills (
+	id bigint not null primary key auto_increment,
+    name nvarchar(500) not null
+)
+
+
+create table languages (
+	id bigint not null primary key auto_increment,
+    name nvarchar(100) not null
+)
+
+
+create table jobs (
+	id bigint not null primary key auto_increment,
+    name nvarchar(100) not null
+)
+
+create table user_course (
+	id bigint not null primary key auto_increment,
+    usersId bigint not null,
+    coursesId bigint not null
+)
