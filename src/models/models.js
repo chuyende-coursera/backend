@@ -5,12 +5,12 @@ class ModelEntity {
   static count(model, options) {
     return Promise.try(() => {
       return model.count(options);
-    }).catch(error => {
+    }).catch((error) => {
       throw new ApiErrors.BaseError({
         statusCode: 202,
         type: "getListError",
         error,
-        name: model.toString() + "Entity"
+        name: model.toString() + "Entity",
       });
     });
   }
@@ -18,12 +18,12 @@ class ModelEntity {
   static findAndCountAll(model, options) {
     return Promise.try(() => {
       return model.findAndCountAll(options);
-    }).catch(error => {
+    }).catch((error) => {
       throw new ApiErrors.BaseError({
         statusCode: 202,
         type: "getListError",
         error,
-        name: model.toString() + "Entity"
+        name: model.toString() + "Entity",
       });
     });
   }
@@ -31,12 +31,12 @@ class ModelEntity {
   static findOne(model, options) {
     return Promise.try(() => {
       return model.findOne(options);
-    }).catch(error => {
+    }).catch((error) => {
       throw new ApiErrors.BaseError({
         statusCode: 202,
         type: "getListError",
         error,
-        name: model.toString() + "Entity"
+        name: model.toString() + "Entity",
       });
     });
   }
@@ -44,26 +44,26 @@ class ModelEntity {
   static create(model, options) {
     return Promise.try(() => {
       return model.create(options);
-    }).catch(error => {
+    }).catch((error) => {
       console.log(error);
 
       throw new ApiErrors.BaseError({
         statusCode: 202,
         type: "getListError",
         error,
-        name: model.toString() + "Entity"
+        name: model.toString() + "Entity",
       });
     });
   }
 
   static update(model, entity, options) {
     return Promise.try(() => {
-      return model.update(entity, options).catch(error => {
+      return model.update(entity, options).catch((error) => {
         throw new ApiErrors.BaseError({
           statusCode: 202,
           type: "getListError",
           error,
-          name: model.toString() + "Entity"
+          name: model.toString() + "Entity",
         });
       });
     });
@@ -72,12 +72,12 @@ class ModelEntity {
   static destroy(model, options) {
     return Promise.try(() => {
       return model.destroy(options);
-    }).catch(error => {
+    }).catch((error) => {
       throw new ApiErrors.BaseError({
         statusCode: 202,
         type: "getListError",
         error,
-        name: model.toString() + "Entity"
+        name: model.toString() + "Entity",
       });
     });
   }
@@ -85,12 +85,25 @@ class ModelEntity {
   static findAll(model, options) {
     return Promise.try(() => {
       return model.findAll(options);
-    }).catch(error => {
+    }).catch((error) => {
       throw new ApiErrors.BaseError({
         statusCode: 202,
         type: "getListError",
         error,
-        name: model.toString() + "Entity"
+        name: model.toString() + "Entity",
+      });
+    });
+  }
+
+  static bulkCreate(model, entity) {
+    return Promise.try(() => {
+      return model.bulkCreate(entity);
+    }).catch((error) => {
+      throw new ApiErrors.BaseError({
+        statusCode: 202,
+        type: "crudError",
+        error,
+        name: model.toString() + "Entity",
       });
     });
   }
