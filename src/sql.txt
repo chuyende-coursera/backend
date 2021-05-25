@@ -1,88 +1,446 @@
+-- phpMyAdmin SQL Dump
+-- version 5.0.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost
+-- Generation Time: May 25, 2021 at 10:08 PM
+-- Server version: 8.0.25-0ubuntu0.20.04.1
+-- PHP Version: 7.4.18
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `facebookdb`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` int NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `topics_id` bigint NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`, `topics_id`) VALUES
+(1, 'Piano', 1),
+(2, 'Guitar', 1),
+(3, 'Coding', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `courses`
+--
+
+CREATE TABLE `courses` (
+  `id` bigint NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `level` int NOT NULL DEFAULT '0',
+  `languages_id` bigint NOT NULL,
+  `categories_id` bigint NOT NULL,
+  `jobs_id` bigint NOT NULL,
+  `skills_id` bigint NOT NULL,
+  `creators_id` bigint NOT NULL,
+  `duration` int NOT NULL DEFAULT '1',
+  `cost` int NOT NULL,
+  `description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+--
+-- Dumping data for table `courses`
+--
+
+INSERT INTO `courses` (`id`, `title`, `level`, `languages_id`, `categories_id`, `jobs_id`, `skills_id`, `creators_id`, `duration`, `cost`, `description`) VALUES
+(1, 'React native', 1, 1, 2, 7, 1, 2, 12, 123, 'React Native lets you create truly native apps and doesn\'t compromise your users\' experiences. It provides a core set of platform agnostic native components like ...');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `courses_weeks`
+--
+
+CREATE TABLE `courses_weeks` (
+  `courses_id` bigint NOT NULL,
+  `weeks_id` bigint NOT NULL,
+  `number_week` bigint NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `group_users`
+--
+
+CREATE TABLE `group_users` (
+  `id` int NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `create_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `status` bit(1) NOT NULL DEFAULT b'1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+--
+-- Dumping data for table `group_users`
+--
+
+INSERT INTO `group_users` (`id`, `name`, `create_date`, `status`) VALUES
+(1, 'student', '2020-12-30 00:00:00', b'1'),
+(2, 'admin', '2020-12-30 00:00:00', b'1'),
+(3, 'teacher', '2020-12-30 00:00:00', b'1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jobs`
+--
+
+CREATE TABLE `jobs` (
+  `id` bigint NOT NULL,
+  `name` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+--
+-- Dumping data for table `jobs`
+--
+
+INSERT INTO `jobs` (`id`, `name`) VALUES
+(1, 'BA'),
+(2, 'BI'),
+(3, 'AI'),
+(4, 'Machine Learning'),
+(5, 'Deep Learning'),
+(6, 'Web Developer'),
+(7, 'Mobile Developer');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `languages`
+--
+
+CREATE TABLE `languages` (
+  `id` bigint NOT NULL,
+  `name` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+--
+-- Dumping data for table `languages`
+--
+
+INSERT INTO `languages` (`id`, `name`) VALUES
+(1, 'React Native'),
+(2, 'Golang'),
+(3, 'C'),
+(4, 'C++'),
+(5, 'Javascript'),
+(6, 'PHP');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `skills`
+--
+
+CREATE TABLE `skills` (
+  `id` int NOT NULL,
+  `name` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+--
+-- Dumping data for table `skills`
+--
+
+INSERT INTO `skills` (`id`, `name`) VALUES
+(1, 'Hacking'),
+(2, 'Coding'),
+(3, 'Nấu ăn'),
+(4, 'Nghệ Thuật'),
+(5, 'UX-UI');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `topics`
+--
+
+CREATE TABLE `topics` (
+  `id` bigint NOT NULL,
+  `name` varchar(500) NOT NULL,
+  `users_id` int NOT NULL,
+  `create_date` date DEFAULT NULL,
+  `status` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+--
+-- Dumping data for table `topics`
+--
+
+INSERT INTO `topics` (`id`, `name`, `users_id`, `create_date`, `status`) VALUES
+(1, 'Nghệ thuật', 2, '2021-05-12', 1),
+(2, 'Giáo dục', 2, '2021-05-12', 1),
+(3, 'Âm nhạc', 2, '2021-05-12', 1),
+(4, 'Việc Làm', 2, '2021-05-12', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
 CREATE TABLE `users` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(50) NOT NULL,
-  `passwork` VARCHAR(100) NOT NULL,
-  `fullname` NVARCHAR(100) NULL,
-  `email` VARCHAR(100) NULL,
-  `mobile` VARCHAR(12) NULL,
-  `group_user_id` INT(11) NULL,
-  `address` NVARCHAR(300) NULL,
-  `wards_id` VARCHAR(45) NOT NULL,
-  `status` VARCHAR(45) NOT NULL,
-  `create_date` DATE NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `username_UNIQUE` (`username` ASC),
-  UNIQUE INDEX `mobile_UNIQUE` (`mobile` ASC));
-)
+  `id` int NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `mobile` varchar(12) DEFAULT NULL,
+  `group_users_id` int DEFAULT NULL,
+  `sex` int DEFAULT NULL,
+  `address` varchar(300) DEFAULT NULL,
+  `wards_id` varchar(45) NOT NULL,
+  `status` varchar(45) NOT NULL,
+  `create_date` date DEFAULT NULL,
+  `birthday` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
-CREATE TABLE `groupUsers` (
-  `id` INT NOT NULL AUTO_INCREMENT primary key,
-  `name` VARCHAR(50) NOT NULL,
-  `createDate` datetime default current_timestamp,
-  `status` bit not null default 1
-)
+--
+-- Dumping data for table `users`
+--
 
-create table categories (
-	id bigint not null primary key auto_increment,
-    name nvarchar(100) not null,
-    topics_id bigint not null
-);
+INSERT INTO `users` (`id`, `username`, `password`, `name`, `email`, `mobile`, `group_users_id`, `sex`, `address`, `wards_id`, `status`, `create_date`, `birthday`) VALUES
+(1, 'quochuy', '29273e727421883df55190fc54c2a551', 'Ho Quoc Huy', 'roni_cost@example.com', '0976346845', 3, NULL, NULL, '1', '1', '2021-05-25', NULL),
+(2, 'admin', '0192023a7bbd73250516f069df18b500', 'Ho Quoc Huy', 'huy.hoquoc99@gmail.com', '0976346846', 1, NULL, NULL, '1', '1', '2021-05-25', NULL);
 
-create table courses (
-	id bigint not null primary key auto_increment,
-    title nvarchar(100) not null,
-	level integer not null default 0,
-    languages_id bigint not null,
-    categories_id bigint not null,
-    jobs_id bigint not null,
-    skills_id bigint not null,
-    creators_id bigint not null,
-    duration integer not null default 1 -- week
-);
+-- --------------------------------------------------------
 
-create table courses_weeks (
-    courses_id bigint not null,
-    weeks_id bigint not null,
-    CONSTRAINT courses_weeks_pk PRIMARY KEY (courses_id, weeks_id)
-);
+--
+-- Table structure for table `user_course`
+--
 
+CREATE TABLE `user_course` (
+  `id` bigint NOT NULL,
+  `usersId` bigint NOT NULL,
+  `coursesId` bigint NOT NULL,
+  `status` bigint NOT NULL,
+  `review` bigint DEFAULT NULL,
+  `comment` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
-create table weeks (
-	id bigint not null primary key auto_increment,
-    time_complete bigint not null, -- // minute
-	header nvarchar(100) not null,
-    description nvarchar(100) not null
-);
+--
+-- Dumping data for table `user_course`
+--
 
-create table video_week (
-	id bigint not null primary key auto_increment,
-    video_url varchar(500) not null,
-    order_video integer(11) not null,
-    video_header nvarchar(100) not null,
-    duration_video integer(11) not null,
-    weeks_id bigint not null
-)
+INSERT INTO `user_course` (`id`, `usersId`, `coursesId`, `status`, `review`, `comment`) VALUES
+(1, 2, 1, 1, NULL, NULL);
 
+-- --------------------------------------------------------
 
-create table skills (
-	id bigint not null primary key auto_increment,
-    name nvarchar(500) not null
-)
+--
+-- Table structure for table `video_week`
+--
 
+CREATE TABLE `video_week` (
+  `id` bigint NOT NULL,
+  `video_url` varchar(500) NOT NULL,
+  `order_video` int NOT NULL,
+  `video_header` varchar(100) NOT NULL,
+  `duration_video` int NOT NULL,
+  `weeks_id` bigint NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
-create table languages (
-	id bigint not null primary key auto_increment,
-    name nvarchar(100) not null
-)
+--
+-- Dumping data for table `video_week`
+--
 
+INSERT INTO `video_week` (`id`, `video_url`, `order_video`, `video_header`, `duration_video`, `weeks_id`) VALUES
+(1, 'myFiles-yt1scom-dem-lao-xao-karaoke-beat-tone-nam_v720pmp4', 1, 'abc', 10, 1),
+(2, 'myFiles-yt1scom-karaoke-giac-mo-chapi-tone-nam-tran-tien-beat-chuan-full-hd_v720pmp4', 2, 'CDF', 10, 1);
 
-create table jobs (
-	id bigint not null primary key auto_increment,
-    name nvarchar(100) not null
-)
+-- --------------------------------------------------------
 
-create table user_course (
-	id bigint not null primary key auto_increment,
-    usersId bigint not null,
-    coursesId bigint not null
-)
+--
+-- Table structure for table `weeks`
+--
+
+CREATE TABLE `weeks` (
+  `id` bigint NOT NULL,
+  `time_complete` bigint NOT NULL,
+  `courses_id` bigint NOT NULL,
+  `number_week` bigint NOT NULL,
+  `header` varchar(100) NOT NULL,
+  `description` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+--
+-- Dumping data for table `weeks`
+--
+
+INSERT INTO `weeks` (`id`, `time_complete`, `courses_id`, `number_week`, `header`, `description`) VALUES
+(1, 12, 1, 1, 'Week 1', 'Học cơ bản props state');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `courses`
+--
+ALTER TABLE `courses`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `courses_weeks`
+--
+ALTER TABLE `courses_weeks`
+  ADD PRIMARY KEY (`courses_id`,`weeks_id`);
+
+--
+-- Indexes for table `group_users`
+--
+ALTER TABLE `group_users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `jobs`
+--
+ALTER TABLE `jobs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `languages`
+--
+ALTER TABLE `languages`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `skills`
+--
+ALTER TABLE `skills`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `topics`
+--
+ALTER TABLE `topics`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user_course`
+--
+ALTER TABLE `user_course`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `video_week`
+--
+ALTER TABLE `video_week`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `weeks`
+--
+ALTER TABLE `weeks`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `courses`
+--
+ALTER TABLE `courses`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `group_users`
+--
+ALTER TABLE `group_users`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `jobs`
+--
+ALTER TABLE `jobs`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `languages`
+--
+ALTER TABLE `languages`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `skills`
+--
+ALTER TABLE `skills`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `topics`
+--
+ALTER TABLE `topics`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `user_course`
+--
+ALTER TABLE `user_course`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `video_week`
+--
+ALTER TABLE `video_week`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `weeks`
+--
+ALTER TABLE `weeks`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

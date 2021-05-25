@@ -8,6 +8,7 @@
   "author": "QuocHuy",
   "license": "ISC",
   "dependencies": {
+    "@babel/preset-react": "^7.13.13",
     "@elastic/elasticsearch": "^7.6.1",
     "@hapi/joi": "^17.1.1",
     "@sentry/node": "^5.15.2",
