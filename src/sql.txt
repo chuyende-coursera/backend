@@ -1,48 +1,51 @@
 CREATE TABLE `users` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(50) NOT NULL,
-  `passwork` VARCHAR(100) NOT NULL,
-  `fullname` NVARCHAR(100) NULL,
+  `password` VARCHAR(100) NOT NULL,
+  `name` VARCHAR(100) NULL,
   `email` VARCHAR(100) NULL,
   `mobile` VARCHAR(12) NULL,
   `group_user_id` INT(11) NULL,
-  `address` NVARCHAR(300) NULL,
+  `sex` INT(1) NULL,
+  `address` VARCHAR(300) NULL,
   `wards_id` VARCHAR(45) NOT NULL,
   `status` VARCHAR(45) NOT NULL,
   `create_date` DATE NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `username_UNIQUE` (`username` ASC),
-  UNIQUE INDEX `mobile_UNIQUE` (`mobile` ASC));
-)
+  `birthday` DATE NULL,
+  PRIMARY KEY (`id`)
+);
 
 CREATE TABLE `groupUsers` (
   `id` INT NOT NULL AUTO_INCREMENT primary key,
   `name` VARCHAR(50) NOT NULL,
   `createDate` datetime default current_timestamp,
   `status` bit not null default 1
-)
+);
 
 create table categories (
-	id bigint not null primary key auto_increment,
-    name nvarchar(100) not null,
+	id int not null primary key auto_increment,
+    name VARCHAR(100) not null,
     topics_id bigint not null
 );
 
 create table courses (
 	id bigint not null primary key auto_increment,
-    title nvarchar(100) not null,
+    title VARCHAR(100) not null,
 	level integer not null default 0,
     languages_id bigint not null,
     categories_id bigint not null,
     jobs_id bigint not null,
     skills_id bigint not null,
     creators_id bigint not null,
-    duration integer not null default 1 -- week
+    duration integer not null default 1,
+    cost integer not null,
+    description VARCHAR(100)
 );
 
 create table courses_weeks (
     courses_id bigint not null,
     weeks_id bigint not null,
+    number_week bigint not null,
     CONSTRAINT courses_weeks_pk PRIMARY KEY (courses_id, weeks_id)
 );
 
@@ -50,39 +53,51 @@ create table courses_weeks (
 create table weeks (
 	id bigint not null primary key auto_increment,
     time_complete bigint not null, -- // minute
-	header nvarchar(100) not null,
-    description nvarchar(100) not null
+    courses_id bigint not null, -- // minute
+    number_week bigint not null, -- // minute
+	header VARCHAR(100) not null,
+    description VARCHAR(100) not null
 );
 
 create table video_week (
 	id bigint not null primary key auto_increment,
     video_url varchar(500) not null,
     order_video integer(11) not null,
-    video_header nvarchar(100) not null,
+    video_header VARCHAR(100) not null,
     duration_video integer(11) not null,
     weeks_id bigint not null
-)
-
+);
 
 create table skills (
-	id bigint not null primary key auto_increment,
-    name nvarchar(500) not null
-)
+	id int not null primary key auto_increment,
+    name VARCHAR(500) not null
+);
 
 
 create table languages (
 	id bigint not null primary key auto_increment,
-    name nvarchar(100) not null
-)
+    name VARCHAR(100) not null
+);
 
 
 create table jobs (
 	id bigint not null primary key auto_increment,
-    name nvarchar(100) not null
-)
+    name VARCHAR(100) not null
+);
 
 create table user_course (
 	id bigint not null primary key auto_increment,
     usersId bigint not null,
-    coursesId bigint not null
-)
+    coursesId bigint not null,
+    status bigint not null,
+    review bigint not null,
+    comment varchar(500) not null
+);
+
+create table topics (
+	id bigint not null primary key auto_increment,
+    name varchar(500) not null,
+    users_id int not null,
+    create_date DATE NULL,
+    status int NULL
+);
